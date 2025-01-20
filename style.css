@@ -1,0 +1,180 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(images/table.png);
+    height: 500px;
+    width: 800px;
+    background-size: cover;
+    background-position: center;
+    position: relative; /* .coin-display の絶対位置指定を親要素に基づいて行うために追加 */
+}
+
+#title-screen, #game-screen, #rule-screen {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    height: 80%;
+}
+
+button{
+    padding: 8px 16px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.winner-display {
+    text-align: center;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 18px;
+    width: 60%;
+    margin: 10px auto;
+    min-height: 20px;
+}
+
+
+#bet-button {
+    padding: 8px 16px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.game-container {
+    display: flex;
+    align-items: flex-start; /* 垂直方向の開始点に合わせて整列 */
+    width: 80%;
+}
+
+.bet-check {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-right: 10px; /* `game-area`から少し間隔を設ける */
+    flex-basis: 20%; /* 幅の割合を指定可能 */
+}
+
+p {
+    margin-left: 12px;
+}
+
+.game-area {
+    flex-basis: 80%; /* 残りの幅を使う */
+    text-align: center;
+    margin: 10px;
+}
+
+.card-hand {
+    display: flex;
+    justify-content: center;
+    margin: 5px 0;
+}
+
+.card {
+    width: 60px;
+    height: 90px;
+    margin: 0 2px;
+    background-color: #cccccc;
+    border: 1px solid #999999;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.selected {
+    transform: translateY(-10px);
+}
+
+.fade-out {
+    animation: fadeOut 0.5s forwards;
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s forwards 0.5s; /* フェードアウトが完了してからスタート */
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px); /* カードを下に少し移動 */
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px); /* カードを上に少し移動 */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+#computer-board {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 20px;
+}
+
+#player-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.result-display {
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 8px;
+    font-size: 18px;
+    width: auto;
+    margin: 0 auto;
+    min-height: 20px; /* 追加: 結果表示の枠を常に確保 */
+}
+
+.coin-display {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center; /* 要素を水平に揃える */
+}
+
+.coin-display img {
+    height: 20px; /* 必要に応じた高さに設定 */
+    margin-right: 5px; /* テキストとの間隔を設定 */
+}
+
+#next-game-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 8px 16px;
+    margin: 10px;
+    cursor: pointer;
+}
