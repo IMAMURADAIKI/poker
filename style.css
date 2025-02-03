@@ -54,8 +54,26 @@ button{
     flex-basis: 20%; /* 幅の割合を指定可能 */
 }
 
-p {
+h2 {
+    text-align: left;
+    margin-left: 150px;
+}
+
+.rule {
     margin-left: 12px;
+    display: flex;
+}
+
+#rule {
+    float: left;
+    text-align: left;
+}
+
+#rank {
+    float: right;
+    margin-right: 50px;
+    margin-top: -35px;
+    text-align: left;
 }
 
 .game-area {
@@ -89,15 +107,26 @@ p {
 
 .selected {
     transform: translateY(-10px);
+    transition: transform 0.3s ease;
 }
 
 .fade-out {
     animation: fadeOut 0.5s forwards;
 }
 
-.fade-in {
+.fadein-up {
     opacity: 0;
-    animation: fadeIn 0.5s forwards 0.5s; /* フェードアウトが完了してからスタート */
+    animation: fadeInUp 0.5s forwards 0.5s;
+}
+
+.fadein-down {
+    opacity: 0;
+    animation: fadeInDown 0.5s forwards 0.5s; /* フェードアウトが完了してからスタート */
+}
+
+.fadein-left {
+    opacity: 0;
+    animation: fadeInleft 0.5s forwards 0.5s;
 }
 
 @keyframes fadeOut {
@@ -106,18 +135,40 @@ p {
     }
     to {
         opacity: 0;
-        transform: translateY(20px); /* カードを下に少し移動 */
+        transform: translateY(20px); /* カードを下に移動 */
     }
 }
 
-@keyframes fadeIn {
+@keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(-20px); /* カードを上に少し移動 */
+        transform: translateY(20px); /* カードを上に移動 */
     }
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px); /* カードを下に移動 */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInleft {
+    from {
+        opacity: 0;
+        transform: translateX(20px); /* カードを左に移動 */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
 
@@ -192,4 +243,8 @@ p {
     top: 30px;
     right: 20px;
     cursor: pointer;
+}
+
+#title-rule {
+    margin-right: 300px;
 }

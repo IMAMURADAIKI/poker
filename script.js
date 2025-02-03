@@ -13,7 +13,7 @@ let players = [
 
 // 賭け金とコインの初期化
 let betmoney = 0;
-let coin = 10;
+let coin = 30;
 
 function audio() {
     document.getElementById('btn_audio').currentTime = 0; //連続クリックに対応
@@ -70,7 +70,9 @@ startGame();
 // ゲームを開始する関数
 function startGame() {
     document.getElementById('exchange-button').classList.remove('hidden');
-    document.getElementById('bet-button').classList.remove('hidden');
+    if(coin > 0){
+        document.getElementById('bet-button').classList.remove('hidden');
+    }
 
     deck = createDeck(); // 新しいデッキを作成
     shuffleDeck(deck); // デッキをシャッフル
@@ -117,16 +119,25 @@ function renderHands() {
     players.forEach(player => {
         const handElement = document.getElementById(player.isHuman ? 'player-hand' : 'computer-hand');
         handElement.innerHTML = '';
-        player.hand.forEach(card => {
+        player.hand.forEach((card, index) => {
             const cardElement = document.createElement('div');
             cardElement.className = 'card';
             cardElement.style.backgroundImage = player.isHuman ? `url('images/${card.value}_${card.suit}.png')` : 'url("images/back.png")';
 
-            // 人間プレイヤーはカードを選択可能
+            cardElement.style.animationDelay = '0.15s';
+            cardElement.classList.add('fadein-left');
+
             if (player.isHuman) {
                 cardElement.addEventListener('click', () => {
-                    cardElement.classList.toggle('selected');
-                    updateExchangeButtons(); // ボタンの表示を更新
+                    if (!cardElement.classList.contains('fadein-left')) {
+                        cardElement.classList.toggle('selected');
+                        updateExchangeButtons();
+                    }
+                });
+
+                // アニメーション終了後にクラスを削除
+                cardElement.addEventListener('animationend', () => {
+                    cardElement.classList.remove('fadein-left');
                 });
             }
 
@@ -134,7 +145,7 @@ function renderHands() {
         });
     });
 
-    updateExchangeButtons(); // 初期状態を確認
+    updateExchangeButtons();
 }
 
 // カード選択に応じて「交換する」ボタンと「交換しない」ボタンを切り替える
@@ -155,33 +166,33 @@ function exchangeCards() {
     document.getElementById('exchange-none-button').classList.add('hidden');
     document.getElementById('bet-button').classList.add('hidden');
 
-    // すべてのカード要素からクリックを無効化
+    
+
     const playerCards = document.querySelectorAll('#player-hand .card');
     playerCards.forEach(cardElement => cardElement.style.pointerEvents = 'none');
 
     const selectedCards = document.querySelectorAll('#player-hand .selected');
 
-
-
-    // 選択されたカードにフェードアウト効果を追加
     selectedCards.forEach(cardElement => {
+        cardElement.classList.remove('selected'); // 'selected'クラスを削除
         cardElement.classList.add('fade-out');
     });
 
     setTimeout(() => {
         selectedCards.forEach(cardElement => {
+            // 'fade-out'アニメーションが完了したら、カードの内容を更新
             const index = Array.from(cardElement.parentNode.children).indexOf(cardElement);
             players[0].hand[index] = deck.pop(); // デッキから新しいカードを引く
-            cardElement.classList.remove('fade-out', 'selected');
+
+            cardElement.classList.remove('fade-out');
             cardElement.style.backgroundImage = `url('images/${players[0].hand[index].value}_${players[0].hand[index].suit}.png')`;
-            cardElement.classList.add('fade-in'); // フェードイン効果を追加
+            cardElement.classList.add('fadein-down');
         });
-    }, 250);
+    }, 500); // 'fade-out'のアニメーション時間に合わせる
 
     setTimeout(() => {
-        renderHands(); // 手札を再描画
-        computerExchangeCards(); // コンピュータのカードを交換
-        revealHands(); // 手札を公開
+        computerExchangeCards();
+        revealHands();
     }, 2000);
 }
 
@@ -333,6 +344,7 @@ function determineWinner() {
             
         } else {
             document.getElementById('winner-result').innerHTML = '引き分け';
+            coin += betmoney;
         }
 
         updateBetDisplay(); // 賭け金表示を更新
@@ -342,11 +354,11 @@ function determineWinner() {
 
 // ベット操作の関数
 function bet() {
-    if (betmoney < 5 && coin > 0) {
+    if (betmoney < 10 && coin > 0) {
         betmoney += 1; // 賭け金を増加
         coin -= 1; // コインを減らす
     }
-    if (betmoney == 5 || coin == 0) {
+    if (betmoney == 10 || coin == 0) {
         document.getElementById('bet-button').classList.add('hidden');
     }
     updateBetDisplay(); // 賭け金表示を更新
