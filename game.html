@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>ポーカーゲーム</title>
+</head>
+<body>
+    <div class="top-bar">
+        <span class="menu-icon" id="menu-icon">&#9776;</span>
+    </div>
+    <div id="side-menu" class="side-menu hidden">
+        <div class="close-btn" id="close-btn">×</div>
+        <ul>
+            <li><a href="#" id="rule-button">ルール説明</a></li>
+            <li><a href="#" onclick="location.href='index.html'">タイトルに戻る</a></li>
+        </ul>
+    </div>
+
+    <div id="game-screen" class="screen">
+        <div class="game-container">
+            <div class="bet-check">
+                <p id="bet-money"></p>
+                <button id="bet-button" onclick="audio()">ベット</button>
+            </div>
+    
+            <div class="game-area">
+
+                <audio id="btn_audio">
+                    <source src="./audio/coin_audio.mp3" type="audio/mp3">
+                </audio>
+                <audio id="card_audio">
+                    <source src="./audio/card_turn.mp3" type="audio/mp3">
+                </audio>
+                <audio id="win">
+                    <source src="./audio/win.mp3" type="audio/mp3">
+                </audio>
+                <audio id="lose">
+                    <source src="./audio/lose.mp3" type="audio/mp3">
+                </audio>
+
+                <div id="computer-board">
+                    <div id="computer-hand" class="card-hand"></div>
+                </div>
+    
+                <div id="computer-result" class="result-display"></div>
+                <div id="winner-result" class="winner-display"></div>
+                <div id="player-result" class="result-display"></div>
+    
+                <div id="player-board">
+                    <div id="player-hand" class="card-hand"></div>
+                    <button id="exchange-none-button">交換しない</button>
+                    <button id="exchange-button">交換する</button>
+                </div>
+
+                <button id="next-game-button" class="hidden">次のゲーム</button>
+            </div>
+        </div>
+    
+        <div class="coin-display">
+            <img src="images/coin.png">
+            <span id="current-coin">10</span>
+        </div>
+
+        <div id="rule-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>ルール説明</h2>
+                <p class="rule" id="rule">
+                    お互いの場に、それぞれ5枚の手札が配られます。<br>
+                    一度だけ、好きな枚数カードを交換できます。<br>
+                    手札を公開し、役の強い方の勝利です。<br><br>
+                    プレイヤーは交換する前にベットが可能です。<br>
+                    コインを0～10枚賭け、勝利した場合は<br>
+                    賭けた数×役の強さの分コインがもらえます。<br>
+                    数字は1から8まであります。
+                </p>
+                <p class="rule" id="rank">
+                    ↓ 　役の強さ<br><br>
+                    ストレートフラッシュ * 9<br>
+                    ４カード　　　　　　 * 8<br>
+                    フルハウス　　　　　 * 7<br>
+                    フラッシュ　　　　　 * 6<br>
+                    ストレート　　　　　 * 5<br>
+                    ３カード　　　　　　 * 4<br>
+                    ２ペア　　　　　　　 * 3<br>
+                    １ペア　　　　　　　 * 2<br>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
